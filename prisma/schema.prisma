@@ -1,0 +1,147 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model User {
+  id                  String   @id @default(cuid())
+  email               String   @unique
+  passwordHash        String
+  displayName         String
+  teamName            String
+  leagueId            String?
+  commissionedLeagues League[] @relation("LeagueCommissioner")
+  picks               Pick[]
+  league              League?  @relation("LeagueManagers", fields: [leagueId], references: [id])
+}
+
+model League {
+  id               String        @id @default(cuid())
+  name             String
+  inviteCode       String        @unique
+  logoUrl          String?
+  goalPts          Float         @default(3)
+  assistPts        Float         @default(1)
+  ratingTier1Pts   Float         @default(1)
+  ratingTier2Pts   Float         @default(2)
+  maxTeams         Int           @default(8)
+  draftType        String        @default("Snake")
+  rosterSize       Int           @default(12)
+  status           String        @default("WAITING")
+  tradeStatus      String        @default("OPEN")
+  waiverCap        Int           @default(2)
+  currentPickIndex Int           @default(0)
+  currentRound     Int           @default(1)
+  commissionerId   String?
+  auditLogs        AuditLog[]
+  chatThreads      ChatThread[]
+  fixtures         Fixture[]
+  commissioner     User?         @relation("LeagueCommissioner", fields: [commissionerId], references: [id])
+  picks            Pick[]
+  playerScores     PlayerScore[]
+  managers         User[]        @relation("LeagueManagers")
+}
+
+model Pick {
+  id        String   @id @default(cuid())
+  leagueId  String
+  playerId  String
+  managerId String
+  round     Int
+  pickIndex Int
+  createdAt DateTime @default(now())
+  manager   User     @relation(fields: [managerId], references: [id])
+  league    League   @relation(fields: [leagueId], references: [id])
+}
+
+model PlayerScore {
+  id          String @id @default(cuid())
+  leagueId    String
+  playerId    String
+  goals       Int    @default(0)
+  assists     Int    @default(0)
+  rating      Float  @default(0.0)
+  manualBonus Float  @default(0.0)
+  status      String @default("Upcoming")
+  league      League @relation(fields: [leagueId], references: [id])
+
+  @@unique([leagueId, playerId])
+}
+
+model TradeOffer {
+  id              String   @id @default(cuid())
+  leagueId        String
+  proposingUserId String
+  targetUserId    String
+  offeredPlayerId String
+  targetPlayerId  String
+  status          String   @default("PENDING")
+  createdAt       DateTime @default(now())
+}
+
+model Transaction {
+  id        String   @id @default(cuid())
+  leagueId  String
+  managerId String
+  round     Int
+  type      String
+  playerId  String
+  createdAt DateTime @default(now())
+}
+
+model Notification {
+  id        String   @id @default(cuid())
+  leagueId  String
+  userId    String
+  message   String
+  type      String
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  leagueId  String
+  message   String
+  createdAt DateTime @default(now())
+  league    League   @relation(fields: [leagueId], references: [id])
+}
+
+model Fixture {
+  id          String   @id @default(cuid())
+  leagueId    String
+  roundNumber Int
+  teamAId     String
+  teamBId     String
+  teamAScore  Float    @default(0.0)
+  teamBScore  Float    @default(0.0)
+  winnerId    String?
+  status      String   @default("UPCOMING")
+  createdAt   DateTime @default(now())
+  league      League   @relation(fields: [leagueId], references: [id])
+}
+
+model ChatThread {
+  id        String    @id @default(cuid())
+  leagueId  String
+  userAId   String
+  userBId   String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  league    League    @relation(fields: [leagueId], references: [id])
+  messages  Message[]
+}
+
+model Message {
+  id        String     @id @default(cuid())
+  threadId  String
+  senderId  String
+  content   String
+  createdAt DateTime   @default(now())
+  thread    ChatThread @relation(fields: [threadId], references: [id])
+}

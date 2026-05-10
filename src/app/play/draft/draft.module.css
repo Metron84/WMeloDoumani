@@ -1,0 +1,270 @@
+.draftContainer {
+  display: flex;
+  gap: 2rem;
+  height: calc(100vh - 6rem);
+  width: 100%;
+}
+
+.mainBoard {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background-color: rgba(26, 26, 26, 0.6);
+  border-radius: 16px;
+  border: 1px solid var(--border-color);
+  padding: 2rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.turnIndicator {
+  background-color: var(--hover-bg);
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-size: 1.2rem;
+  font-weight: 500;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 0 20px rgba(0, 255, 136, 0.1);
+}
+
+.activeManager {
+  color: var(--primary-accent);
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.gridWrapper {
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 1rem;
+}
+
+.draftGrid {
+  display: grid;
+  gap: 1rem;
+}
+
+.gridHeaderCell {
+  font-weight: bold;
+  font-size: 1.1rem;
+  color: #aaaaaa;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid var(--border-color);
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.gridHeaderCell.activeColumn {
+  color: var(--primary-accent);
+  border-bottom-color: var(--primary-accent);
+}
+
+.roundCell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: #777;
+  font-size: 1.2rem;
+}
+
+.pickCell {
+  background-color: rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  min-height: 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0.75rem;
+  transition: all 0.3s ease;
+}
+
+.activePick {
+  border-color: var(--primary-accent);
+  box-shadow: 0 0 15px rgba(0, 255, 136, 0.2);
+  background-color: rgba(0, 255, 136, 0.05);
+}
+
+.emptyPick {
+  color: #444;
+  text-align: center;
+  font-size: 1.5rem;
+}
+
+.playerCard {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  animation: draftIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes draftIn {
+  0% { opacity: 0; transform: scale(0.9); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+.playerName {
+  font-weight: 600;
+  font-size: 1rem;
+  color: #fff;
+}
+
+.playerDetails {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.8rem;
+}
+
+.teamLabel {
+  color: #888;
+}
+
+.posLabel, .posBadge {
+  font-weight: bold;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+}
+
+.posLabel[data-pos="GK"], .posBadge[data-pos="GK"] { background: #1a365d; color: #60a5fa; border: 1px solid #60a5fa; }
+.posLabel[data-pos="DF"], .posBadge[data-pos="DF"] { background: #14532d; color: #4ade80; border: 1px solid #4ade80; }
+.posLabel[data-pos="MF"], .posBadge[data-pos="MF"] { background: #713f12; color: #facc15; border: 1px solid #facc15; }
+.posLabel[data-pos="FW"], .posBadge[data-pos="FW"] { background: #7f1d1d; color: #f87171; border: 1px solid #f87171; }
+
+/* Sidebar Styles */
+.playerSidebar {
+  width: 320px;
+  background-color: rgba(26, 26, 26, 0.6);
+  border-radius: 16px;
+  border: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+}
+
+.sidebarTitle {
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 1rem;
+}
+
+.filters {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.filterBtn {
+  background: transparent;
+  border: 1px solid var(--border-color);
+  color: #aaa;
+  padding: 0.5rem 0.8rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 0.85rem;
+  font-weight: bold;
+}
+
+.filterBtn:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.activeFilter {
+  background: var(--primary-accent);
+  color: #000;
+  border-color: var(--primary-accent);
+}
+
+.activeFilter:hover {
+  background: #00e67a;
+}
+
+.playerList {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding-right: 0.5rem;
+}
+
+.availablePlayerCard {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 1rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.availablePlayerCard:hover {
+  border-color: var(--primary-accent);
+  transform: translateX(-4px);
+}
+
+.availableHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.draftBtn {
+  position: absolute;
+  right: -100px;
+  top: 0;
+  bottom: 0;
+  width: 80px;
+  background: var(--primary-accent);
+  color: #000;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  transition: right 0.3s;
+}
+
+.availablePlayerCard:hover .draftBtn {
+  right: 0;
+}
+
+.noPlayers {
+  color: #666;
+  text-align: center;
+  margin-top: 2rem;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
