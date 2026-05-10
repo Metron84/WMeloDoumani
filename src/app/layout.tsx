@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Playfair_Display, Inter } from "next/font/google";
+import { DM_Sans, Inter, Libre_Baskerville, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import { Providers } from "@/components/Providers";
 
@@ -12,6 +12,20 @@ const playfair = Playfair_Display({
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
+  display: "swap",
+});
+
+const libre = Libre_Baskerville({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  variable: "--font-libre",
+  display: "swap",
+});
+
+const dmSans = DM_Sans({
+  subsets: ["latin"],
+  weight: ["300", "400", "500"],
+  variable: "--font-dm-sans",
   display: "swap",
 });
 
@@ -60,7 +74,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${playfair.variable} ${inter.variable} bg-white text-slate-900 dark:bg-black dark:text-gray-200 transition-colors duration-300`}
+        className={`${playfair.variable} ${inter.variable} ${libre.variable} ${dmSans.variable} bg-white text-slate-900 dark:bg-black dark:text-gray-200 transition-colors duration-300`}
       >
         <Providers>{children}</Providers>
       </body>

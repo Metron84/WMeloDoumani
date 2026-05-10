@@ -1,5 +1,6 @@
-import Link from "next/link";
 import { SiteHeader } from "@/components/SiteHeader";
+import { MarketingBodyClass } from "@/components/MarketingBodyClass";
+import "@/styles/portfolio-legacy.css";
 
 export default function MarketingLayout({
   children,
@@ -8,16 +9,9 @@ export default function MarketingLayout({
 }) {
   return (
     <div className="marketing-shell">
+      <MarketingBodyClass />
       <SiteHeader />
       <div className="marketing-shell__main">{children}</div>
-      <footer className="site-footer">
-        <div className="site-footer__inner">
-          <p className="site-footer__muted">
-            Ultimate Fantasy Manager ·{" "}
-            <Link href="/play">Enter the game</Link>
-          </p>
-        </div>
-      </footer>
     </div>
   );
 }

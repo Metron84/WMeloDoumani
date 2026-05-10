@@ -689,10 +689,80 @@ button:active,
 
 .marketing-shell__main {
   flex: 1;
-  max-width: 72rem;
+  max-width: none;
   margin: 0 auto;
-  padding: 2rem 1.25rem 4rem;
+  padding: 0;
   width: 100%;
+}
+
+/* Marketing routes use legacy portfolio / Reflective CSS on body.marketing-portfolio */
+body.marketing-portfolio .site-header {
+  border-bottom-color: var(--rule, #c8c3b8);
+  background: var(--cream, #f8f5ef);
+}
+
+body.marketing-portfolio .site-header__logo {
+  color: var(--ink, #1a1814);
+}
+
+body.marketing-portfolio .site-header__link {
+  color: var(--ink-mid, #3d3a35);
+}
+
+body.marketing-portfolio .site-header__link:hover {
+  color: var(--amber, #b8700a);
+}
+
+.reflective-loading {
+  padding: 3rem 1.25rem;
+  text-align: center;
+  font-size: 1rem;
+  color: var(--text-secondary);
+}
+
+.reflective-article-route__nav {
+  padding: 1rem 1.25rem 0;
+  max-width: 1160px;
+  margin: 0 auto;
+}
+
+.reflective-article-route__nav a {
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.reflective-article-route__nav a:hover {
+  color: var(--accent);
+}
+
+.reflective-article-route__body {
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 1rem 1.25rem 4rem;
+}
+
+.marketing-minimal-footer {
+  padding: 2rem 1.25rem 3rem;
+  text-align: center;
+  border-top: 1px solid var(--border);
+}
+
+.marketing-minimal-footer p {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--text-muted);
+}
+
+.marketing-minimal-footer a {
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+.marketing-minimal-footer a:hover {
+  color: var(--accent);
 }
 
 .site-header {
