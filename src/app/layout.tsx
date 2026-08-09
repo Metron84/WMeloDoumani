@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Archivo, Newsreader } from "next/font/google";
 import "./globals.css";
-import { identity } from "@/data/cv";
+import { identity, links } from "@/data/cv";
 
 const archivo = Archivo({
   subsets: ["latin"],
@@ -48,9 +48,34 @@ export const metadata: Metadata = {
 };
 
 export const viewport = {
-  themeColor: "#101418",
+  themeColor: "#0a111f",
   width: "device-width",
   initialScale: 1,
+};
+
+const personSchema = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: identity.name,
+  alternateName: "Melo Doumani",
+  jobTitle: identity.role,
+  description: identity.summary,
+  email: `mailto:${identity.email}`,
+  telephone: identity.phone,
+  url: "https://melodoumani.com",
+  image: "https://melodoumani.com/melo-portrait.jpg",
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Dubai",
+    addressCountry: "AE",
+  },
+  worksFor: {
+    "@type": "Organization",
+    name: "The Reflective Football",
+    url: "https://thereflectivefootball.com",
+  },
+  knowsLanguage: ["en", "ar", "fr", "es", "it"],
+  sameAs: links.map((l) => l.href),
 };
 
 export default function RootLayout({
@@ -59,6 +84,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${archivo.variable} ${newsreader.variable}`}>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
+        />
         {children}
       </body>
     </html>

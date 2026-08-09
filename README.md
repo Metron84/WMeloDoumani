@@ -5,12 +5,6 @@ Portfolio and digital CV for Melo Doumani.
 ## Editing content
 
 All facts live in **`src/data/cv.ts`**. Change them there, not in the JSX.
-Anything marked `TODO` still needs confirming against the CV.
-
-## Downloadable CV
-
-Drop the PDF at `public/melo-doumani-cv.pdf`.
-The filename is set once in `identity.cvFile` in `src/data/cv.ts`.
 
 ## Run it
 
@@ -24,16 +18,17 @@ npm run build
 
 Defined at the top of `src/app/globals.css`.
 
-- Ink `#101418`
-- Press paper `#EAE7E0`
-- Floodlight `#E8B23A`
+- Navy `#0A111F`
+- Cream `#F2EDE4`
+- Signal red `#D8232A`
 - Display type: Archivo
 - Body type: Newsreader
 
 ## Regenerating the CV PDF
 
-The downloadable CV is generated from `src/data/cv.ts`, so the document and the
-site can never disagree. After editing `cv.ts`, run:
+The CV PDF is generated from `src/data/cv.ts` for the record. The site routes
+people through the Request CV mailto instead of a direct download. After
+editing `cv.ts`, run:
 
 ```bash
 pip install reportlab

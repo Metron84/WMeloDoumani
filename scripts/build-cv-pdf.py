@@ -30,13 +30,30 @@ RULE = HexColor("#D5CEC1")
 
 # Archivo and Newsreader are not installed here, so the PDF uses the closest
 # available pairing: a grotesque for display, a serif for body.
-FONTS = {
-    "Display": "/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf",
-    "DisplayR": "/usr/share/fonts/truetype/liberation/LiberationSans-Regular.ttf",
-    "Body": "/usr/share/fonts/truetype/liberation/LiberationSerif-Regular.ttf",
-    "BodyB": "/usr/share/fonts/truetype/liberation/LiberationSerif-Bold.ttf",
+FONT_CANDIDATES = {
+    "Display": [
+        "/System/Library/Fonts/Supplemental/Arial Bold.ttf",
+        "/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf",
+    ],
+    "DisplayR": [
+        "/System/Library/Fonts/Supplemental/Arial.ttf",
+        "/usr/share/fonts/truetype/liberation/LiberationSans-Regular.ttf",
+    ],
+    "Body": [
+        "/System/Library/Fonts/Supplemental/Times New Roman.ttf",
+        "/usr/share/fonts/truetype/liberation/LiberationSerif-Regular.ttf",
+    ],
+    "BodyB": [
+        "/System/Library/Fonts/Supplemental/Times New Roman Bold.ttf",
+        "/usr/share/fonts/truetype/liberation/LiberationSerif-Bold.ttf",
+    ],
 }
-for name, path in FONTS.items():
+for name, candidates in FONT_CANDIDATES.items():
+    path = next((p for p in candidates if os.path.isfile(p)), None)
+    if not path:
+        raise SystemExit(
+            f"Missing font for {name}. Tried: {', '.join(candidates)}"
+        )
     pdfmetrics.registerFont(TTFont(name, path))
 
 W, H = A4
