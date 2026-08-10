@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Mind of Melo">
+  <!-- Brand navy squircle -->
+  <rect width="512" height="512" rx="112" fill="#0A111F"/>
+
+  <!-- Head silhouette (simplified from Mind of Melo mark) -->
+  <path
+    fill="#F2EDE4"
+    d="M160 416v-64c0-44 36-80 80-80h24c14 0 26-12 26-26v-10c-36-16-62-52-62-94 0-58 48-106 106-106s106 48 106 106c0 42-26 78-62 94v10c0 14 12 26 26 26h12c44 0 80 36 80 80v64H160z"
+  />
+
+  <!-- Single mind aperture — holds at 16px; red core for brand signal -->
+  <circle cx="286" cy="196" r="52" fill="#0A111F"/>
+  <circle cx="286" cy="196" r="18" fill="#D8232A"/>
+</svg>

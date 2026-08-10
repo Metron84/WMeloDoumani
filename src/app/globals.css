@@ -1592,26 +1592,112 @@ body {
 
 /* --- experience march ----------------------------------------------------- */
 
-.march {
-  margin-top: 0.35rem;
+#experience {
+  padding-block: 2.25rem;
 }
 
-.march__desk-svg {
+@media (min-width: 48rem) {
+  #experience {
+    padding-block: 3.5rem;
+  }
+
+  #experience .section__head {
+    margin-bottom: 1.25rem;
+  }
+}
+
+.march {
+  margin-top: 0;
+}
+
+.march__desk-figures,
+.march__desk-labels {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  column-gap: 0.75rem;
+  align-items: end;
+}
+
+.march__desk-fig-wrap {
+  display: flex;
+  justify-content: center;
+  min-width: 0;
+}
+
+.march__desk-fig {
+  width: 100%;
+  max-width: 130px;
+  height: 150px;
+}
+
+.march__desk-fig svg,
+.march__row-fig svg {
+  display: block;
+  overflow: visible;
+}
+
+.march__ground {
   display: block;
   width: 100%;
-  max-width: 680px;
-  height: auto;
+  height: 2px;
+  margin: 0;
   overflow: visible;
 }
 
 .march .gl {
-  stroke-dasharray: 600;
-  stroke-dashoffset: 600;
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
 }
 
-.march .fg {
-  opacity: 0;
-  transform-box: view-box;
+.march__desk-labels {
+  margin-top: 0.85rem;
+  align-items: start;
+}
+
+.march__desk-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  min-width: 0;
+  height: 6.75rem;
+}
+
+.march__desk-year {
+  margin: 0 0 0.35rem;
+  font-family: var(--display);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--floodlight);
+}
+
+.march__desk-org {
+  margin: 0;
+  min-height: 2.5em;
+  font-family: var(--display);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+  color: var(--ink);
+}
+
+.march__desk-role {
+  margin: 0.25rem 0 0;
+  min-height: 1.3em;
+  font-size: 11px;
+  line-height: 1.3;
+  color: rgba(10, 17, 31, 0.6);
+}
+
+.march__desk-note {
+  margin-top: auto;
+  min-height: 1.3em;
+  font-size: 11px;
+  line-height: 1.3;
+  color: rgba(10, 17, 31, 0.6);
 }
 
 .march__rows {
@@ -1619,38 +1705,25 @@ body {
   margin: 0;
   padding: 0;
   display: grid;
-  gap: 1.15rem;
-  position: relative;
-  padding-left: 0.25rem;
-}
-
-.march__rows::before {
-  content: "";
-  position: absolute;
-  left: 28px;
-  top: 0.5rem;
-  bottom: 0.5rem;
-  width: 1px;
-  background: rgba(10, 17, 31, 0.35);
+  gap: 20px;
 }
 
 .march__row {
   display: grid;
-  grid-template-columns: 56px minmax(0, 1fr);
-  gap: 0.85rem;
-  align-items: center;
-  position: relative;
-  z-index: 1;
+  grid-template-columns: 64px minmax(0, 1fr);
+  gap: 0.75rem;
+  align-items: end;
+  min-width: 0;
 }
 
 .march__row-fig {
-  display: block;
-  width: 56px;
-  height: 112px;
+  width: 64px;
+  height: calc(64px * 122 / 80);
 }
 
 .march__row-copy {
   min-width: 0;
+  padding-bottom: 0.15rem;
 }
 
 .march__row-year {
@@ -1679,6 +1752,11 @@ body {
   font-size: 13px;
   color: rgba(10, 17, 31, 0.6);
   line-height: 1.35;
+  min-height: 0;
+}
+
+.march__row-note:empty {
+  display: none;
 }
 
 .march .fg,
@@ -1693,7 +1771,7 @@ body {
 
 @media (prefers-reduced-motion: no-preference) {
   .march:not(.is-visible) .gl {
-    stroke-dashoffset: 600;
+    stroke-dashoffset: 100;
     animation: none;
   }
 
@@ -2073,6 +2151,7 @@ a.term__entry:hover .term__cmd {
 .blueprint__box,
 .blueprint__output,
 .blueprint__titleblock,
+.blueprint__detail,
 .blueprint__draw {
   opacity: 1;
 }
@@ -2151,7 +2230,7 @@ a.term__entry:hover .term__cmd {
   }
 }
 
-@media (min-width: 60rem) {
+@media (min-width: 48rem) {
   .blueprint__mobile {
     display: none;
   }
@@ -2225,7 +2304,18 @@ a.term__entry:hover .term__cmd {
     text-align: center;
     cursor: pointer;
     color: inherit;
+    font: inherit;
     background: rgba(10, 17, 31, 0.72);
+    transition: border-color 0.15s ease;
+  }
+
+  .blueprint__box--desk:focus-visible {
+    outline: 2px solid var(--floodlight);
+    outline-offset: 2px;
+  }
+
+  .blueprint__box--desk.is-selected {
+    border-color: var(--floodlight);
   }
 
   .blueprint__box--desk .blueprint__branch-title {
@@ -2234,25 +2324,12 @@ a.term__entry:hover .term__cmd {
     line-height: 1.2;
   }
 
-  .blueprint__summary--desk {
-    display: none;
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: calc(100% + 8px);
-    z-index: 3;
-    margin: 0;
-    padding: 0.65rem 0.7rem;
-    border: 1px solid var(--bp-line);
-    border-radius: 3px;
-    background: var(--ink);
-    text-align: left;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  .blueprint__desk-col.is-selected .blueprint__tick {
+    background: var(--floodlight);
   }
 
-  .blueprint__box--desk:hover .blueprint__summary--desk,
-  .blueprint__box--desk:focus-visible .blueprint__summary--desk {
-    display: block;
+  .blueprint__desk-col.is-selected .blueprint__leaf-spine {
+    background: rgba(216, 35, 42, 0.55);
   }
 
   .blueprint__leaf {
@@ -2279,6 +2356,48 @@ a.term__entry:hover .term__cmd {
     display: none;
   }
 
+  .blueprint__detail {
+    margin-top: 1.5rem;
+    padding: 20px;
+    border: 1px solid rgba(242, 237, 228, 0.4);
+    border-radius: 3px;
+    background: transparent;
+  }
+
+  .blueprint__detail-stack {
+    display: grid;
+  }
+
+  .blueprint__detail-item {
+    grid-area: 1 / 1;
+    opacity: 0;
+    transition: opacity 200ms ease;
+    pointer-events: none;
+  }
+
+  .blueprint__detail-item.is-active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .blueprint__detail-title {
+    margin: 0 0 0.55rem;
+    font-family: var(--bp-mono);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--red-on-ink);
+  }
+
+  .blueprint__detail-summary {
+    margin: 0;
+    max-width: 62ch;
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--paper);
+  }
+
   .blueprint__titleblock {
     margin-top: 2rem;
     margin-left: 0;
@@ -2300,7 +2419,13 @@ a.term__entry:hover .term__cmd {
   }
 }
 
-@media (min-width: 60rem) and (prefers-reduced-motion: no-preference) {
+@media (prefers-reduced-motion: reduce) {
+  .blueprint__detail-item {
+    transition: none;
+  }
+}
+
+@media (min-width: 48rem) and (prefers-reduced-motion: no-preference) {
   .blueprint:not(.is-visible) .blueprint__draw {
     stroke-dashoffset: 1000;
     animation: none;
@@ -2323,6 +2448,7 @@ a.term__entry:hover .term__cmd {
 
   .blueprint:not(.is-visible) .blueprint__root--desk,
   .blueprint:not(.is-visible) .blueprint__box--desk,
+  .blueprint:not(.is-visible) .blueprint__detail,
   .blueprint:not(.is-visible) .blueprint__desktop .blueprint__titleblock {
     opacity: 0;
     animation: none;
@@ -2336,6 +2462,11 @@ a.term__entry:hover .term__cmd {
   .blueprint.is-visible .blueprint__box--desk {
     animation: blueprint-fade 0.35s ease both;
     animation-delay: calc(480ms + var(--branch-delay, 0ms));
+  }
+
+  .blueprint.is-visible .blueprint__detail {
+    animation: blueprint-fade 0.35s ease both;
+    animation-delay: 1100ms;
   }
 
   .blueprint.is-visible .blueprint__desktop .blueprint__titleblock {

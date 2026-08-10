@@ -29,7 +29,13 @@ export const metadata: Metadata = {
   title: `${identity.name} — ${identity.role}`,
   description: identity.summary,
   alternates: { canonical: "https://melodoumani.com" },
-  icons: { icon: "/icon.png", apple: "/icon.png" },
+  icons: {
+    icon: [
+      { url: "/icon.svg", type: "image/svg+xml" },
+      { url: "/icon.png", sizes: "512x512", type: "image/png" },
+    ],
+    apple: [{ url: "/icon.png", sizes: "180x180", type: "image/png" }],
+  },
   openGraph: {
     title: `${identity.name} — ${identity.role}`,
     description: identity.summary,
