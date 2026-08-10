@@ -3,11 +3,11 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "next dev -p 3109",
+    "dev": "next dev -p 3256",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "cv": "python3 scripts/build-cv-pdf.py"
+    "cv": ".venv/bin/python scripts/build-cv-pdf.py"
   },
   "dependencies": {
     "next": "16.2.6",

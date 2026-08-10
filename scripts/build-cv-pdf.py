@@ -122,10 +122,16 @@ def load():
         f: obj("identity", f)
         for f in ["name", "role", "location", "visa", "summary", "email", "phone"]
     }
-    metrics = re.findall(
-        r'value: "([^"]*)", label: "([^"]*)"',
-        re.search(r"metrics: \[(.*?)\n  \]", src, re.S).group(1),
+    channels_body = re.search(
+        r"export const channels[^=]*=\s*\[(.*?)\n\];", src, re.S
     )
+    metrics = []
+    if channels_body:
+        metrics = re.findall(
+            r'key: "(?:youtube|instagram)",.*?headline: "([^"]*)",\s*\n\s*headlineNote: "([^"]*)"',
+            channels_body.group(1),
+            re.S,
+        )
     stack = [
         (g, re.findall(r'"([^"]*)"', i))
         for g, i in re.findall(r'group: "([^"]*)",\s*\n\s*items: \[(.*?)\]', src, re.S)
@@ -133,17 +139,25 @@ def load():
     return dict(
         ident=ident,
         experience=credits("experience"),
-        films=objs("films"),
         built=objs("built"),
-        capability=objs("capability"),
+        capability=[
+            {
+                "name": re.search(r'title:\s*"([^"]*)"', c).group(1),
+                "detail": re.search(
+                    r'summary:\s*\n?\s*"((?:[^"\\]|\\.)*)"', c
+                ).group(1).replace('\\"', '"'),
+            }
+            for c in chunks(arr("capabilityTree"))
+            if re.search(r'title:\s*"([^"]*)"', c)
+        ],
         languages=objs("languages"),
         books=objs("books"),
         papers=objs("papers"),
         links=objs("links"),
         metrics=metrics,
         stack=stack,
-        markets=obj("traction", "markets"),
-        since=obj("traction", "since"),
+        markets="United Kingdom · UAE · Spain · United States · Mexico",
+        since="Since 1 May 2026",
     )
 
 
@@ -305,21 +319,6 @@ def build():
             p.wrap(line, "Body", 9.5, W - M - (M + COL) - 14, M + COL + 14, 12.5)
             p.space(2)
         p.space(5)
-
-    # --- films --------------------------------------------------------------
-    p.heading("Selected films")
-    for f in d["films"]:
-        p.need(16)
-        c.setFont("Display", 8)
-        c.setFillColor(MUTE)
-        c.drawString(M, p.y, f["club"].upper())
-        c.setFont("BodyB", 9.5)
-        c.setFillColor(NAVY)
-        c.drawString(M + COL, p.y, f["title"])
-        c.setFont("Body", 9)
-        c.setFillColor(MUTE)
-        c.drawRightString(W - M, p.y, f["venue"])
-        p.space(15)
 
     # --- built --------------------------------------------------------------
     p.heading("Built")

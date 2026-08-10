@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Archivo, Newsreader } from "next/font/google";
+import { Archivo, Bodoni_Moda, Newsreader } from "next/font/google";
 import "./globals.css";
 import { identity, links } from "@/data/cv";
 
@@ -7,6 +7,13 @@ const archivo = Archivo({
   subsets: ["latin"],
   weight: ["500", "600", "700", "800"],
   variable: "--font-archivo",
+  display: "swap",
+});
+
+const bodoni = Bodoni_Moda({
+  subsets: ["latin"],
+  weight: ["600", "700", "800"],
+  variable: "--font-bodoni",
   display: "swap",
 });
 
@@ -83,7 +90,9 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <body className={`${archivo.variable} ${newsreader.variable}`}>
+      <body
+        className={`${archivo.variable} ${bodoni.variable} ${newsreader.variable}`}
+      >
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}

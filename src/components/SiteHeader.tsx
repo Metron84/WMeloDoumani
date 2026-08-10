@@ -2,7 +2,6 @@ import { identity } from "@/data/cv";
 
 const nav = [
   { href: "#work", label: "Work" },
-  { href: "#traction", label: "Numbers" },
   { href: "#experience", label: "Experience" },
   { href: "#built", label: "Built" },
   { href: "#capability", label: "Capability" },

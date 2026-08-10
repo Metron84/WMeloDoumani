@@ -6,7 +6,7 @@
 
 export const identity = {
   name: "W. Melo Doumani",
-  role: "Football media creator, founder of The Reflective Football, and builder of strategy tools",
+  role: "Media creator, founder of The Reflective Football, and builder of custom AI tools and apps",
   location: "Dubai, United Arab Emirates",
   visa: "UAE Golden Visa holder",
   summary:
@@ -31,71 +31,51 @@ export const reel = {
   video: "/video/promo.mp4",
 };
 
-export type Film = {
-  club: string;
-  venue: string;
-  title: string;
-  format: string;
-  blurb: string;
+export type Channel = {
+  key: "youtube" | "instagram" | "website";
+  label: string;
+  headline: string;
+  headlineNote: string;
+  points: string[];
+  organic: string;
   href: string;
-  image?: string;
+  cta: string;
 };
 
-// Season 1. Each card takes a 9:16 poster frame from the matching Reel.
-export const films: Film[] = [
+export const channels: Channel[] = [
   {
-    club: "Arsenal",
-    venue: "Garden on 8",
-    title: "22 Years of Heartbreak",
-    format: "Documentary",
-    blurb: "Why Arsenal fans still believe. The Dubai diaspora.",
-    href: "https://youtu.be/7UFWTZ6Qa3k",
-    image: "/films/arsenal.jpg",
+    key: "youtube",
+    label: "YouTube",
+    headline: "100,000+",
+    headlineNote: "views since launch",
+    points: ["1,700 hours watched", "700,000+ impressions"],
+    organic: "Zero paid promotion, every view organic",
+    href: "https://www.youtube.com/@thereflectivefootball",
+    cta: "Visit channel",
   },
   {
-    club: "West Ham",
-    venue: "Nelson's Bar",
-    title: "The Final Day",
-    format: "Documentary",
-    blurb: "The Dubai Hammers on the day the season ran out.",
-    href: "https://youtu.be/PFZKRlFRhOI",
-    image: "/films/westham.jpg",
+    key: "instagram",
+    label: "Instagram",
+    headline: "500,000+",
+    headlineNote: "views in 90 days",
+    points: ["350K viewers", "90% of reach from non-followers"],
+    organic: "Zero paid promotion, every view organic",
+    href: "https://www.instagram.com/thereflectivefootball",
+    cta: "Visit profile",
   },
   {
-    club: "Chelsea",
-    venue: "Belgian Beer Café",
-    title: "The Supporters Club That Never Stops Believing",
-    format: "Documentary",
-    blurb: "Chelsea FC Dubai, in full voice.",
-    href: "https://youtu.be/BRCMFCk5Lns",
-    image: "/films/chelsea.jpg",
-  },
-  {
-    club: "Aston Villa",
-    venue: "McGettigan's Factory",
-    title: "Aston Villa Fans in Dubai",
-    format: "Europa League Final",
-    blurb: "What a Europa League final looks like from Dubai.",
-    href: "https://youtu.be/-tjmjeRL5y0",
-    image: "/films/villa-moment.jpg",
-  },
-  {
-    club: "Spain",
-    venue: "Garden on 8",
-    title: "The Signs Were There",
-    format: "World Cup Final",
-    blurb: "Spanish fans on winning the World Cup. Viva España.",
-    href: "https://youtu.be/lrRfE5PHSZI",
-    image: "/films/spain.jpg",
-  },
-  {
-    club: "Manchester United",
-    venue: "Brooklyn Bar, Elite Byblos Hotel",
-    title: "Manchester United Fans in Dubai",
-    format: "Documentary",
-    blurb: "Support that outlives the results.",
-    href: "https://youtu.be/8VepZZ8vpHk",
-    image: "/films/manutd.jpg",
+    key: "website",
+    label: "The website",
+    headline: "TRF Community",
+    headlineNote: "",
+    points: [
+      "Play football games",
+      "Vote for the supporters",
+      "Explore total content",
+    ],
+    organic: "",
+    href: "https://thereflectivefootball.com",
+    cta: "Visit site",
   },
 ];
 
@@ -124,83 +104,6 @@ export const formats = [
 
 
 // ---------------------------------------------------------------------------
-// INSTAGRAM — the reach half of the funnel
-// ---------------------------------------------------------------------------
-
-export type Reel = {
-  when: string;
-  headline: string;
-  views: string;
-  note: string;
-  stats: { label: string; value: string }[];
-  href: string;
-};
-
-export const reels: Reel[] = [
-  {
-    when: "30 May 2026",
-    headline: "Champions League Final",
-    views: "402,184",
-    note: "Filmed at Garden on 8. Still collecting comments months later.",
-    stats: [
-      { label: "Interactions", value: "56,316" },
-      { label: "Shares", value: "14,919" },
-      { label: "Saves", value: "3,301" },
-      { label: "New follows", value: "797" },
-      { label: "Reach from non-followers", value: "94.1%" },
-    ],
-    href: "https://www.instagram.com/reel/DY9W4oTI1mp/",
-  },
-  {
-    when: "21 June 2026",
-    headline: "World Cup run",
-    views: "8,590",
-    note: "Cross-posted to Facebook, where it added a further 6,431 views.",
-    stats: [
-      { label: "Interactions", value: "85" },
-      { label: "Comments", value: "28" },
-      { label: "Accounts engaged", value: "86" },
-      { label: "Reach from non-followers", value: "95%" },
-      { label: "Facebook views", value: "6,431" },
-    ],
-    href: "https://www.instagram.com/reel/DZ2NVjHIAT0/",
-  },
-  {
-    when: "8 Aug 2026, 3.27am",
-    headline: "Timing experiment",
-    views: "1,425",
-    note: "Deliberately published at an unconventional hour to test how much the schedule really moves reach.",
-    stats: [
-      { label: "Interactions", value: "26" },
-      { label: "Viewers", value: "319" },
-      { label: "Reach from non-followers", value: "77.2%" },
-    ],
-    href: "https://www.instagram.com/reel/Dbwd9msIK-3/",
-  },
-];
-
-export const funnel =
-  "Two platforms, one funnel. Instagram creates the reach, almost entirely from people who do not follow the account yet. YouTube converts that attention into watch time. The website keeps it.";
-
-// ---------------------------------------------------------------------------
-// THE NUMBERS — revealed after the work
-// ---------------------------------------------------------------------------
-
-export const traction = {
-  since: "Since 1 May 2026",
-  window: "YouTube to 1 August 2026. Instagram, 90 days to 2 August 2026. No paid media.",
-  metrics: [
-    { value: "104,322", label: "YouTube views" },
-    { value: "1,674 hrs", label: "Watch time on YouTube" },
-    { value: "536,781", label: "Instagram views in 90 days" },
-    { value: "720,558", label: "YouTube impressions at 4.59% CTR" },
-    { value: "91%", label: "Instagram reach from non-followers" },
-    { value: "AED 0", label: "Spent on paid media" },
-  ],
-  markets: "United Kingdom · UAE · Spain · United States · Mexico",
-};
-
-// ---------------------------------------------------------------------------
 
 export type Credit = {
   period: string;
@@ -209,10 +112,33 @@ export type Credit = {
   detail: string[];
 };
 
+export type Experience = Credit;
+
+export type Stage = {
+  year: string;
+  org: string;
+  role: string;
+  note?: string;
+};
+
+export const experienceStages: Stage[] = [
+  {
+    year: "2006",
+    org: "Sports journalist and writer",
+    role: "",
+    note: "8,000+ pieces",
+  },
+  { year: "2022", org: "Metron Ventures", role: "Founder (AI tools and apps)" },
+  { year: "2024", org: "e& (Etisalat)", role: "Media and AI lead" },
+  { year: "2025", org: "Standard Bank", role: "R&D blueprint lead" },
+  { year: "2026", org: "The Reflective", role: "Media founder" },
+];
+
+/** Full-detail credits for the CV PDF generator. */
 export const experience: Credit[] = [
   {
-    period: "2025 — Present",
-    role: "Founder and Creator",
+    period: "2026 — Present",
+    role: "Media Founder",
     org: "The Reflective Football, Dubai",
     detail: [
       "Built a football media brand around Dubai's supporter culture, sole operator across concept, filming, editing and distribution.",
@@ -223,7 +149,7 @@ export const experience: Credit[] = [
   },
   {
     period: "2025 — 2026",
-    role: "Lead, Strategic Foresight and R&D",
+    role: "R&D Blueprint Lead",
     org: "Standard Bank Group",
     detail: [
       "Retained as senior AI advisor to Africa's largest banking group for sovereign AI frameworks and expansion strategy.",
@@ -232,7 +158,7 @@ export const experience: Credit[] = [
   },
   {
     period: "2024 — 2025",
-    role: "Lead, AI Integration and Go-to-Market",
+    role: "Media and AI Lead",
     org: "e& (Etisalat), Abu Dhabi and Dubai",
     detail: [
       "Led AI adoption frameworks during e&'s shift from regional telco to global technology investment group.",
@@ -242,7 +168,7 @@ export const experience: Credit[] = [
   },
   {
     period: "2022 — Present",
-    role: "Founder and Venture Architect",
+    role: "Founder, AI Tools and Apps",
     org: "Metron Ventures, Dubai",
     detail: [
       "Runs a five-platform AI innovation studio with a cross-functional team of engineers, designers and strategists.",
@@ -252,14 +178,14 @@ export const experience: Credit[] = [
   },
   {
     period: "2006 — Present",
-    role: "Sports Journalist and Essayist",
-    org: "Arab News, The Watch Post, Meer",
+    role: "Sports Journalist and Writer",
+    org: "Regional and international titles",
     detail: [
       "Twenty years writing, fifteen of them on football, tennis and sports culture.",
       "Long-form match analysis and essays for regional and international titles, blending tactical insight with cultural commentary.",
       "The same editorial instinct now drives what gets filmed at The Reflective Football.",
     ],
-  }
+  },
 ];
 
 
@@ -272,6 +198,7 @@ export type Product = {
   title: string;
   blurb: string;
   stack: string;
+  command: string;
   href?: string;
 };
 
@@ -282,6 +209,7 @@ export const built: Product[] = [
     blurb:
       "An AI agent for business strategy. Convene a panel from 350 curated thinkers, work a real challenge through Arena, Intent, Audience, Challenge and Panel, then export the session as DOCX, PDF, PPTX or Markdown.",
     stack: "Next.js · Anthropic Claude API or local Ollama · Vercel · macOS Electron build",
+    command: "tpd-studio",
     href: "https://www.metronventures.com/tpd-studio",
   },
   {
@@ -290,6 +218,7 @@ export const built: Product[] = [
     blurb:
       "A live awards ballot across eight categories with timeline-synced nominee clips, gated sign-in, one-vote-per-user state and standings revealed after voting.",
     stack: "Next.js · Supabase · seeded nominee data",
+    command: "the-reflectives",
     href: "https://thereflectivefootball.com",
   },
   {
@@ -298,6 +227,7 @@ export const built: Product[] = [
     blurb:
       "A football guessing game built into thereflectivefootball.com to turn passive viewers into returning members.",
     stack: "Next.js · Supabase",
+    command: "the-guesser",
     href: "https://thereflectivefootball.com",
   },
   {
@@ -306,6 +236,7 @@ export const built: Product[] = [
     blurb:
       "A curated football knowledge index across nine mediums, 124 entries and counting. Google finds you pages, this tells you where to start.",
     stack: "Static JSON index · thinker-led recommendation flow",
+    command: "beautiful-archive",
   },
   {
     kind: "Consumer app",
@@ -313,6 +244,7 @@ export const built: Product[] = [
     blurb:
       "A nostalgia music player with around 699 tracks and a DJ Set mode: build a set, dual-deck live crossfade, download the mix.",
     stack: "Static PWA · Web Audio API · Cloudflare R2 · Vercel",
+    command: "mrmelo-vibes",
     href: "https://mrmelo.com",
   },
   {
@@ -321,6 +253,7 @@ export const built: Product[] = [
     blurb:
       "A curated canon of 500 books, films, series and paintings with live UAE streaming availability and sourcing links for every entry.",
     stack: "Next.js · static JSON data",
+    command: "culture-collection",
   },
   {
     kind: "Game",
@@ -328,6 +261,7 @@ export const built: Product[] = [
     blurb:
       "A strategic card game. Empty your hand, then your visible cards, then the hidden ones. Commitment cards change the maths.",
     stack: "React · TypeScript · Vite · Zustand · Vitest · PWA",
+    command: "all-in",
   },
   {
     kind: "AI instrument",
@@ -335,6 +269,7 @@ export const built: Product[] = [
     blurb:
       "A sovereign, local-first thinking instrument: panels of thinkers, methodology packs and authorial voice styles, with plan-mode pre-flight, session forking, sub-agent Deepen runs and a semantically searchable archive. Maestro 22 is the chat-first rebuild, adding a live fact-sheet dossier beside the thread and hybrid vector plus lexical retrieval.",
     stack: "Next.js 15.5 · React · TypeScript · Tailwind · RAG · Ollama · nomic-embed-text · fully offline",
+    command: "maestro --local-first",
   },
   {
     kind: "AI instrument",
@@ -342,6 +277,7 @@ export const built: Product[] = [
     blurb:
       "A screenwriting partner that conceptualises with you, then writes line by line in turn. Scene list, logline drafting, and export to Fountain, FDX, PDF, DOCX and Markdown.",
     stack: "Next.js 15 · React · TypeScript · Ollama · runs entirely offline",
+    command: "screenbuddy",
   },
 ];
 
@@ -349,26 +285,41 @@ export const built: Product[] = [
 // STRATEGY AND RESEARCH
 // ---------------------------------------------------------------------------
 
-export const capability = [
+export type CapabilityBranch = {
+  key: string;
+  title: string;
+  summary: string;
+  outputs: string[];
+};
+
+export const capabilityTree: CapabilityBranch[] = [
   {
-    name: "Content strategy",
-    detail:
+    key: "content",
+    title: "Content strategy",
+    summary:
       "Built a two-platform funnel on purpose. Instagram Reels generate the reach, YouTube holds the watch time, the website holds the audience and the data. 91 percent of Instagram reach comes from non-followers.",
+    outputs: ["Reels for reach", "YouTube for depth", "Site holds them"],
   },
   {
-    name: "Commercial strategy",
-    detail:
-      "Benchmarked and priced a full sponsorship architecture at market mid-point across docuseries titles, venue retainers, podcast tiers, academies and event sponsorship.",
-  },
-  {
-    name: "Applied research",
-    detail:
+    key: "research",
+    title: "Applied research",
+    summary:
       "Runs decision-grade research in 10 to 14 day sprints using the Dual Lens Framework. Commercialised six Distress Radar 2026 sector reports across hospitality, F&B, media, marketing, education and Gulf tech.",
+    outputs: ["Dual Lens", "Six reports", "Three papers"],
   },
   {
-    name: "Go-to-market",
-    detail:
+    key: "commercial",
+    title: "Commercial strategy",
+    summary:
+      "Benchmarked and priced a full sponsorship architecture at market mid-point across docuseries titles, venue retainers, podcast tiers, academies and event sponsorship.",
+    outputs: ["Sponsorship", "Venue retainers", "Mid-point pricing"],
+  },
+  {
+    key: "gtm",
+    title: "Go-to-market",
+    summary:
       "Designed and shipped enterprise B2B AI go-to-market at e&, from brief to launch, targeting ADNOC and major UAE corporates.",
+    outputs: ["Enterprise B2B", "Brief to launch", "UAE corporates"],
   },
 ];
 
@@ -429,6 +380,9 @@ export const books = [
   },
 ];
 
+export const shelfQuote =
+  "Fifteen years of asking who the game is actually for.";
+
 export const papers = [
   {
     title: "Who Is Football For? Fan Testimony from the 2026 FIFA World Cup",
@@ -448,6 +402,73 @@ export const papers = [
     href: "https://zenodo.org/records/18357660",
   },
 ];
+
+export type PubPage =
+  | { kind: "cover" }
+  | {
+      kind: "work";
+      label: "Book" | "Paper";
+      title: string;
+      outlet: string;
+      href: string;
+    }
+  | { kind: "end"; text: string };
+
+export const pubPages: PubPage[] = [
+  { kind: "cover" },
+  {
+    kind: "work",
+    label: "Book",
+    title: books[0].title,
+    outlet: "Amazon Kindle",
+    href: books[0].href,
+  },
+  {
+    kind: "work",
+    label: "Book",
+    title: books[1].title,
+    outlet: "Amazon Kindle",
+    href: books[1].href,
+  },
+  {
+    kind: "work",
+    label: "Book",
+    title: books[2].title,
+    outlet: "Amazon Kindle",
+    href: books[2].href,
+  },
+  {
+    kind: "work",
+    label: "Paper",
+    title: "Who Is Football For? Fan Testimony from the 2026 World Cup",
+    outlet: "Zenodo",
+    href: papers[0].href,
+  },
+  {
+    kind: "work",
+    label: "Paper",
+    title: "Beyond the Shot: Expected Goals as a Relational Graph",
+    outlet: "Zenodo",
+    href: papers[1].href,
+  },
+  {
+    kind: "work",
+    label: "Paper",
+    title: "The Translator Imperative: Cognitive Hybridity",
+    outlet: "Zenodo",
+    href: papers[2].href,
+  },
+  { kind: "end", text: shelfQuote },
+];
+
+/** Full paper titles for link aria-labels (page titles may be shortened). */
+export function pubFullTitle(href: string): string {
+  return (
+    papers.find((p) => p.href === href)?.title ??
+    books.find((b) => b.href === href)?.title ??
+    href
+  );
+}
 
 export const links = [
   { label: "The Reflective Football", href: "https://thereflectivefootball.com" },

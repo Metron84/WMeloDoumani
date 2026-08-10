@@ -10,7 +10,7 @@ All facts live in **`src/data/cv.ts`**. Change them there, not in the JSX.
 
 ```bash
 npm install
-npm run dev     # http://localhost:3109
+npm run dev     # http://localhost:3256
 npm run build
 ```
 
