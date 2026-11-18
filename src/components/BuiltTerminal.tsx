@@ -23,6 +23,7 @@ export function BuiltTerminal() {
               <p className="term__cmd">
                 <span className="term__prompt">&gt;</span> {entry.command}
               </p>
+              {entry.private ? <p className="term__private">Private build</p> : null}
               <p className="term__desc">{entry.blurb}</p>
               <p className="term__stack"># {entry.stack}</p>
             </>
@@ -51,11 +52,6 @@ export function BuiltTerminal() {
             </div>
           );
         })}
-
-        <p className="term__cursor-line" aria-hidden="true">
-          <span className="term__prompt">&gt;</span>
-          <span className="term__cursor" />
-        </p>
       </div>
     </div>
   );

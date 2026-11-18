@@ -1,10 +1,8 @@
 "use client";
 
 import type { CSSProperties } from "react";
-import { experienceStages } from "@/data/cv";
+import { experience } from "@/data/cv";
 import { useReveal } from "@/hooks/useReveal";
-
-const DELAYS = [".5s", ".68s", ".86s", "1.04s", "1.22s"] as const;
 
 const FIGURE_TRANSFORMS = [
   "rotate(-14) scale(.88)",
@@ -239,119 +237,35 @@ function Figure({ index }: { index: FigureIndex }) {
   );
 }
 
-function StageLabel({
-  stage,
-  variant,
-}: {
-  stage: (typeof experienceStages)[number];
-  variant: "desk" | "row";
-}) {
-  const yearClass = variant === "desk" ? "march__desk-year" : "march__row-year";
-  const orgClass = variant === "desk" ? "march__desk-org" : "march__row-org";
-  const roleClass = variant === "desk" ? "march__desk-role" : "march__row-role";
-  const noteClass = variant === "desk" ? "march__desk-note" : "march__row-note";
-
-  return (
-    <>
-      <p className={yearClass}>{stage.year}</p>
-      <p className={orgClass}>{stage.org}</p>
-      {variant === "desk" ? (
-        <>
-          <p className={roleClass}>{stage.role || "\u00a0"}</p>
-          <p className={noteClass}>{stage.note || "\u00a0"}</p>
-        </>
-      ) : (
-        <>
-          {stage.role ? <p className={roleClass}>{stage.role}</p> : null}
-          {stage.note ? <p className={noteClass}>{stage.note}</p> : null}
-        </>
-      )}
-    </>
-  );
-}
-
-function DesktopMarch() {
-  return (
-    <div
-      className="march__desk"
-      role="img"
-      aria-label="Twenty years of experience, five figures walking left to right"
-    >
-      <div className="march__desk-figures">
-        {experienceStages.map((stage, i) => (
-          <div
-            key={stage.year}
-            className="fg march__desk-fig-wrap"
-            style={{ "--d": DELAYS[i] } as CSSProperties}
-          >
-            <div className="march__desk-fig">
-              <Figure index={i as FigureIndex} />
-            </div>
-          </div>
-        ))}
-      </div>
-
-      <svg
-        className="march__ground"
-        viewBox="0 0 1000 2"
-        preserveAspectRatio="none"
-        aria-hidden="true"
-      >
-        <line
-          className="gl"
-          pathLength={100}
-          x1="0"
-          y1="1"
-          x2="1000"
-          y2="1"
-          stroke="rgba(10,17,31,.35)"
-          strokeWidth="1"
-        />
-      </svg>
-
-      <div className="march__desk-labels">
-        {experienceStages.map((stage) => (
-          <div key={stage.year} className="march__desk-label">
-            <StageLabel stage={stage} variant="desk" />
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function MobileMarch() {
-  return (
-    <ul className="march__rows">
-      {experienceStages.map((stage, i) => (
-        <li
-          key={stage.year}
-          className="march__row"
-          style={{ "--d": `${i * 90}ms` } as CSSProperties}
-        >
-          <div className="march__row-fig">
-            <Figure index={i as FigureIndex} />
-          </div>
-          <div className="march__row-copy">
-            <StageLabel stage={stage} variant="row" />
-          </div>
-        </li>
-      ))}
-    </ul>
-  );
-}
-
 export function ExperienceMarch() {
   const { ref, visible } = useReveal<HTMLDivElement>();
 
   return (
     <div ref={ref} className={`march${visible ? " is-visible" : ""}`}>
-      <div className="layoutMobile" aria-hidden="true">
-        <MobileMarch />
-      </div>
-      <div className="layoutDesktop" aria-hidden="true">
-        <DesktopMarch />
-      </div>
+      <ul className="march__rows">
+        {experience.map((credit, i) => {
+          const title = credit.role === credit.org ? credit.role : credit.org;
+          const subtitle = credit.role === credit.org ? "" : credit.role;
+          const note = credit.detail[0] ?? "";
+          return (
+            <li
+              key={`${credit.period}-${credit.org}`}
+              className="march__row"
+              style={{ "--d": `${i * 90}ms` } as CSSProperties}
+            >
+              <div className="march__row-fig">
+                <Figure index={(i % 5) as FigureIndex} />
+              </div>
+              <div className="march__row-copy">
+                <p className="march__row-year">{credit.period}</p>
+                <p className="march__row-org">{title}</p>
+                {subtitle ? <p className="march__row-role">{subtitle}</p> : null}
+                {note ? <p className="march__row-note">{note}</p> : null}
+              </div>
+            </li>
+          );
+        })}
+      </ul>
     </div>
   );
 }

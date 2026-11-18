@@ -165,13 +165,16 @@ function Controls({
   );
 }
 
+const firstWorkIndex = pubPages.findIndex((page) => page.kind === "work");
+const hasWorks = firstWorkIndex >= 0;
+
 export function PublishedBook() {
   const { ref, visible } = useReveal<HTMLDivElement>();
 
-  const [index, setIndex] = useState(0);
-  const [isOpen, setIsOpen] = useState(false);
-  const [live, setLive] = useState(false);
-  const [controlsOn, setControlsOn] = useState(false);
+  const [index, setIndex] = useState(hasWorks ? firstWorkIndex : 0);
+  const [isOpen, setIsOpen] = useState(hasWorks);
+  const [live, setLive] = useState(hasWorks);
+  const [controlsOn, setControlsOn] = useState(hasWorks);
   const [flipContent, setFlipContent] = useState<PubPage | undefined>();
   const [flipping, setFlipping] = useState(false);
   const [flipAngle, setFlipAngle] = useState(0);
@@ -180,9 +183,9 @@ export function PublishedBook() {
   const [leftPeek, setLeftPeek] = useState<number | null>(null);
 
   const busyRef = useRef(false);
-  const indexRef = useRef(0);
-  const openRef = useRef(false);
-  const liveRef = useRef(false);
+  const indexRef = useRef(hasWorks ? firstWorkIndex : 0);
+  const openRef = useRef(hasWorks);
+  const liveRef = useRef(hasWorks);
   const reduceRef = useRef(false);
   const timers = useRef<number[]>([]);
   const rafs = useRef<number[]>([]);
@@ -216,25 +219,6 @@ export function PublishedBook() {
     },
     [clearRafs],
   );
-
-  const resetBook = useCallback(() => {
-    clearTimers();
-    clearRafs();
-    busyRef.current = false;
-    setFlipping(false);
-    setFlipTransition(false);
-    setFlipAngle(0);
-    setRightPeek(null);
-    setLeftPeek(null);
-    setFlipContent(undefined);
-    setIsOpen(false);
-    openRef.current = false;
-    setIndex(0);
-    indexRef.current = 0;
-    setLive(false);
-    liveRef.current = false;
-    setControlsOn(false);
-  }, [clearRafs, clearTimers]);
 
   const becomeInteractive = useCallback(() => {
     setLive(true);
@@ -350,6 +334,8 @@ export function PublishedBook() {
     [closeBook, later, scheduleFlipTo],
   );
 
+  const jumpRef = useRef<(n: number) => void>(() => {});
+
   const jump = useCallback(
     (n: number) => {
       if (busyRef.current || n === indexRef.current) return;
@@ -362,45 +348,38 @@ export function PublishedBook() {
           openBook(n);
           return;
         }
-        openBook(1, () => jump(n));
+        openBook(1, () => jumpRef.current(n));
         return;
       }
       const step = n > indexRef.current ? fwd : back;
-      step(() => jump(n));
+      step(() => jumpRef.current(n));
     },
     [back, closeBook, fwd, openBook],
   );
+
+  useEffect(() => {
+    jumpRef.current = jump;
+  }, [jump]);
 
   useEffect(() => {
     reduceRef.current = window.matchMedia(
       "(prefers-reduced-motion: reduce)",
     ).matches;
 
-    if (reduceRef.current) {
-      if (visible) becomeInteractive();
+    if (!hasWorks || !visible || reduceRef.current) {
+      becomeInteractive();
       return;
     }
 
-    if (!visible) {
-      resetBook();
-      return () => {
-        clearTimers();
-        clearRafs();
-      };
-    }
-
-    resetBook();
     later(() => {
-      openBook(1, () => {
-        const tick = () => {
-          if (indexRef.current >= pubPages.length - 1) {
-            later(() => closeBook(becomeInteractive), END_HOLD_MS);
-            return;
-          }
-          fwd(() => later(tick, AUTO_GAP_MS));
-        };
-        later(tick, AUTO_GAP_MS);
-      });
+      const tick = () => {
+        if (indexRef.current >= pubPages.length - 1) {
+          later(becomeInteractive, END_HOLD_MS);
+          return;
+        }
+        fwd(() => later(tick, AUTO_GAP_MS));
+      };
+      later(tick, AUTO_GAP_MS);
     }, 0);
 
     return () => {
@@ -410,7 +389,6 @@ export function PublishedBook() {
     };
   }, [
     visible,
-    resetBook,
     openBook,
     closeBook,
     fwd,
@@ -462,6 +440,8 @@ export function PublishedBook() {
     onJump: jump,
   };
 
+  if (!hasWorks) return null;
+
   return (
     <div
       ref={ref}
@@ -470,7 +450,7 @@ export function PublishedBook() {
       onKeyDown={onKeyDown}
       aria-label="Published flip book"
     >
-      <div className="layoutDesktop" aria-hidden="true">
+      <div className="layoutDesktop">
         <div className="book__stage">
           <div
             className={`book__closed${isOpen ? " is-hidden" : ""}`}
@@ -503,7 +483,7 @@ export function PublishedBook() {
         <Controls {...controlsProps} />
       </div>
 
-      <div className="layoutMobile" aria-hidden="true">
+      <div className="layoutMobile">
         <div className="book__stage book__stage--mobile">
           <div
             className={`book__closed book__closed--mobile${isOpen ? " is-hidden" : ""}`}

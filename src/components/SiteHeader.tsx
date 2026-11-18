@@ -40,18 +40,14 @@ export function SiteHeader() {
             ))}
           </nav>
         </details>
-        <nav className="header__nav" aria-label="Sections">
-          {nav.map((item) => (
-            <a key={item.href} href={item.href} className="header__link">
-              {item.label}
-            </a>
-          ))}
-        </nav>
         <a
-          href={`mailto:${identity.email}?subject=${encodeURIComponent("CV request")}`}
+          href={identity.cvFile}
           className="btn header__cv"
+          target="_blank"
+          rel="noopener noreferrer"
+          download
         >
-          Request CV
+          Download CV
         </a>
       </div>
     </header>

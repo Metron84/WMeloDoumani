@@ -40,8 +40,25 @@ export function CapabilityBlueprint() {
   const buttonRefs = useRef<Array<HTMLButtonElement | null>>([]);
 
   useEffect(() => {
-    if (visible) setSelected(0);
-  }, [visible]);
+    const root = ref.current;
+    if (!root) return;
+    const mobile = root.querySelector<HTMLElement>(".blueprint__mobile");
+    const desktop = root.querySelector<HTMLElement>(".blueprint__desktop");
+    if (!mobile || !desktop) return;
+
+    const mq = window.matchMedia("(min-width: 48rem)");
+    const sync = () => {
+      const desk = mq.matches;
+      mobile.toggleAttribute("inert", desk);
+      desktop.toggleAttribute("inert", !desk);
+      mobile.setAttribute("aria-hidden", desk ? "true" : "false");
+      desktop.setAttribute("aria-hidden", desk ? "false" : "true");
+    };
+
+    sync();
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
+  }, [ref]);
 
   function onBranchKeyDown(event: KeyboardEvent<HTMLButtonElement>, index: number) {
     if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
@@ -91,7 +108,6 @@ export function CapabilityBlueprint() {
             </li>
           ))}
         </ul>
-        <TitleBlock />
       </div>
 
       <div className="blueprint__desktop">
@@ -184,9 +200,9 @@ export function CapabilityBlueprint() {
             })}
           </div>
         </div>
-
-        <TitleBlock />
       </div>
+
+      <TitleBlock />
     </div>
   );
 }

@@ -25,11 +25,7 @@ function CountHeadline({
 }) {
   const countable = channel.key === "youtube" || channel.key === "instagram";
   const target = countable ? parseCountable(channel.headline) : null;
-  const [text, setText] = useState(
-    countable && target !== null
-      ? formatCounted(0, channel.headline)
-      : channel.headline,
-  );
+  const [text, setText] = useState(channel.headline);
 
   useEffect(() => {
     if (!countable || target === null) {
@@ -41,13 +37,8 @@ function CountHeadline({
       typeof window !== "undefined" &&
       window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    if (reduce) {
+    if (reduce || !active) {
       setText(channel.headline);
-      return;
-    }
-
-    if (!active) {
-      setText(formatCounted(0, channel.headline));
       return;
     }
 

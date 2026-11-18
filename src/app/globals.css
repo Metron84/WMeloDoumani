@@ -322,6 +322,14 @@ img {
   border-left: 3px solid var(--floodlight);
 }
 
+.hero__open {
+  margin-top: 1rem;
+  max-width: 42ch;
+  font-size: 0.9375rem;
+  line-height: 1.45;
+  color: rgba(10, 17, 31, 0.78);
+}
+
 .hero__summary {
   margin-top: 1.25rem;
   max-width: 46ch;
@@ -517,8 +525,17 @@ img {
   margin-bottom: 1rem;
 }
 
+.contact__cv {
+  margin-top: 1.5rem;
+}
+
+.contact .btn:hover {
+  box-shadow: 4px 4px 0 rgba(242, 237, 228, 0.28);
+}
+
 .contact__mail {
-  display: inline-block;
+  display: block;
+  width: fit-content;
   max-width: 100%;
   font-family: var(--display);
   font-size: 1rem;
@@ -1415,7 +1432,10 @@ body {
 
 @media (min-width: 60rem) {
   .menu {
-    display: none;
+    display: flex;
+    flex: 1 1 auto;
+    justify-content: flex-end;
+    position: static;
   }
 }
 
@@ -1556,17 +1576,24 @@ body {
   display: none;
 }
 
+.menu:not([open]) .menu__panel {
+  display: none;
+}
+
 .menu__panel {
   position: absolute;
   top: calc(100% + 0.75rem);
   right: 0;
   z-index: 50;
-  display: flex;
   flex-direction: column;
   min-width: 12rem;
   padding: 0.5rem;
   background: var(--ink);
   border: 1px solid var(--rule-dark);
+}
+
+.menu[open] .menu__panel {
+  display: flex;
 }
 
 .menu__link {
@@ -1588,6 +1615,38 @@ body {
 .menu__link:focus-visible {
   color: var(--paper);
   background: rgba(242, 237, 228, 0.08);
+}
+
+@media (min-width: 60rem) {
+  .menu__toggle {
+    display: none;
+  }
+
+  .menu:not([open]) .menu__panel,
+  .menu[open] .menu__panel {
+    display: flex;
+    position: static;
+    flex-direction: row;
+    align-items: center;
+    gap: 1.5rem;
+    min-width: 0;
+    padding: 0;
+    background: transparent;
+    border: 0;
+    z-index: auto;
+  }
+
+  .menu__link {
+    min-height: 0;
+    padding: 0.25rem 0;
+    border-bottom: 2px solid transparent;
+  }
+
+  .menu__link:hover,
+  .menu__link:focus-visible {
+    background: transparent;
+    border-bottom-color: var(--floodlight);
+  }
 }
 
 /* --- experience march ----------------------------------------------------- */
@@ -1904,6 +1963,17 @@ a.term__entry:hover .term__cmd {
 .term__stack {
   padding-left: 14px;
   color: rgba(242, 237, 228, 0.4);
+}
+
+.term__private {
+  display: inline-block;
+  margin: 0.15rem 0 0.15rem 14px;
+  padding: 0.05rem 0.4rem;
+  border: 1px solid rgba(242, 237, 228, 0.35);
+  color: rgba(242, 237, 228, 0.62);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .term__cursor-line {
@@ -2371,12 +2441,14 @@ a.term__entry:hover .term__cmd {
   .blueprint__detail-item {
     grid-area: 1 / 1;
     opacity: 0;
+    visibility: hidden;
     transition: opacity 200ms ease;
     pointer-events: none;
   }
 
   .blueprint__detail-item.is-active {
     opacity: 1;
+    visibility: visible;
     pointer-events: auto;
   }
 

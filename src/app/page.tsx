@@ -9,6 +9,7 @@ import { PublishedBook } from "@/components/PublishedBook";
 import {
   identity,
   links,
+  publishedWorks,
   reel,
 } from "@/data/cv";
 
@@ -30,13 +31,17 @@ export default function Home() {
               </p>
               <h1 className="hero__name">{identity.name}</h1>
               <p className="hero__role">{identity.role}</p>
+              <p className="hero__open">{identity.openTo}</p>
               <p className="hero__summary">{identity.summary}</p>
               <div className="hero__actions">
                 <a
-                  href={`mailto:${identity.email}?subject=${encodeURIComponent("CV request")}`}
+                  href={identity.cvFile}
                   className="btn"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  download
                 >
-                  Request CV
+                  Download CV
                 </a>
                 <a href="#work" className="btn btn--ghost">
                   See the work
@@ -63,7 +68,6 @@ export default function Home() {
         <section className="section section--alt" id="work">
           <div className="wrap">
             <div className="section__head">
-              <p className="eyebrow">See it first</p>
               <h2 className="section__title">The work</h2>
             </div>
 
@@ -84,7 +88,6 @@ export default function Home() {
         <section className="section" id="experience">
           <div className="wrap">
             <div className="section__head">
-              <p className="eyebrow">Credits</p>
               <h2 className="section__title">Experience</h2>
             </div>
             <ExperienceMarch />
@@ -114,23 +117,33 @@ export default function Home() {
         </section>
 
         {/* PUBLISHED */}
-        <section className="section" id="published">
-          <div className="wrap">
-            <div className="section__head">
-              <p className="eyebrow">In print and on record</p>
-              <h2 className="section__title">Published</h2>
+        {publishedWorks.length > 0 ? (
+          <section className="section" id="published">
+            <div className="wrap">
+              <div className="section__head">
+                <p className="eyebrow">In print and on record</p>
+                <h2 className="section__title">Published</h2>
+              </div>
+              <PublishedBook />
             </div>
-            <PublishedBook />
-          </div>
-        </section>
+          </section>
+        ) : null}
 
         {/* CONTACT */}
         <section className="section contact" id="contact">
           <div className="wrap">
-            <p className="eyebrow eyebrow--light">Get in touch</p>
-            <h2 className="contact__title">Request CV</h2>
+            <h2 className="contact__title">Get in touch</h2>
             <a href={`mailto:${identity.email}`} className="contact__mail">
               {identity.email}
+            </a>
+            <a
+              href={identity.cvFile}
+              className="btn contact__cv"
+              target="_blank"
+              rel="noopener noreferrer"
+              download
+            >
+              Download CV
             </a>
             <div className="contact__links">
               {links.map((l) => (
